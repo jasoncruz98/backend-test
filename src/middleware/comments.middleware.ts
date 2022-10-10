@@ -6,7 +6,9 @@ import logger from '../utils/logger';
 //Will move schemas to a schema folder when middlewares get larger
 export const SourceCommentSchema = object({
     query: object({
-        postId: string().regex(/^\d+$/, {message: "postId is not a valid number"}).transform((val) => Number(val)).optional(),
+        //Validating postId as numeric string
+        postId: string().regex(/^\d+$/, { message: "postId is not a valid number" }).transform((val) => Number(val)).optional(),
+        //Validating id as numeric string
         id: string().regex(/^\d+$/, {message: "id is not a valid number"}).transform((val) => Number(val)).optional(),
         name: string().optional(),
         email: string().optional(),
@@ -14,7 +16,7 @@ export const SourceCommentSchema = object({
     }).optional(),
 });
 
-export const validate = (schema: AnyZodObject) => (req: Request, res: Response, next: NextFunction) => {
+export const validateQuery = (schema: AnyZodObject) => (req: Request, res: Response, next: NextFunction) => {
     const schema_validator = schema.safeParse({
         query: req.query,
     });

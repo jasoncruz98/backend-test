@@ -1,17 +1,14 @@
 
 import { typicode_client } from '../utils/clients';
-import { Post, SourcePost, TopPosts} from '../dto/posts.dto';
-import { SourceComment, Comment, Comments } from '../dto/comments.dto';
-import { NextFunction, Request, Response } from 'express'
-
+import { Comment, SourceComment } from '../dto/comments.dto';
+import { Request } from 'express'
 
 const escapeBackslash = (str: string) => {
     return str.replace(/\\/g, '\\\\');
 }
 
 //TODO: implement fuzzy search
-
-export const searchCommentsService = async (req: Request): Promise<any> => {
+export const searchCommentsService = async (req: Request): Promise<Comment[]> => {
     const { postId, id, name, email, body } = req.query;
     const res = await typicode_client.get('/comments');
 
